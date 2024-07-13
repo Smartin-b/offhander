@@ -16,5 +16,4 @@ this allows you for example to block while holding a trident or to not place off
 ### Im unsure if anticheats might not be happy about players beeing able to block while holding a bow/trident or similar. Use at own risk.
 It does **NOT** allow you to execute two interactions at the same time! It just allows you to have more control over which interaction to use.
 
-https://modrinth.com/mod/offhander/settings/description
-https://www.curseforge.com/minecraft/mc-mods/offhander
+[modrinth](https://modrinth.com/mod/offhander) [curseforge](https://www.curseforge.com/minecraft/mc-mods/offhander)

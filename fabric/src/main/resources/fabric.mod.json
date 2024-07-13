@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "offhander",
+  "version": "${version}",
+
+  "name": "offhander",
+  "description": "",
+  "authors": [],
+  "contact": {},
+
+  "license": "MIT",
+  "icon": "icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "smartin.offhander.fabric.OffhanderFabric"
+    ]
+  },
+  "mixins": [
+    "offhander.mixins.json",
+    "offhander-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": ">=1.20.1"
+  }
+}

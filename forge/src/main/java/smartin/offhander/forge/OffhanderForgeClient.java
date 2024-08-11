@@ -1,28 +1,25 @@
 package smartin.offhander.forge;
 
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import smartin.offhander.OffHanderClient;
 import smartin.offhander.Offhander;
 
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD,value = Dist.CLIENT,modid = Offhander.MOD_ID)
 public class OffhanderForgeClient {
     public static void setup() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.register(new ClientModEvents());
+        //NeoForge.EVENT_BUS.addListener(OffhanderForgeClient::registerBindings);
     }
 
 
-    public static class ClientModEvents {
+    @SubscribeEvent
+    public static void registerBindings(RegisterKeyMappingsEvent event) {
 
-        @SubscribeEvent
-        public void registerBindings(RegisterKeyMappingsEvent event) {
-
-            OffHanderClient.MAPPINGS.forEach((id, mapping) -> {
-                Offhander.LOGGER.info("register keybindins");
-                event.register(mapping);
-            });
-        }
+        OffHanderClient.MAPPINGS.forEach((id, mapping) -> {
+            event.register(mapping);
+        });
     }
 }

@@ -1,8 +1,8 @@
 package smartin.offhander.forge;
 
 import net.minecraft.client.Minecraft;
+import net.neoforged.fml.common.Mod;
 import smartin.offhander.Offhander;
-import net.minecraftforge.fml.common.Mod;
 
 @Mod(Offhander.MOD_ID)
 public class OffhanderForge {

@@ -10,6 +10,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import smartin.offhander.OffHanderClient;
 
+import static org.spongepowered.asm.mixin.injection.At.Shift.AFTER;
+import static org.spongepowered.asm.mixin.injection.At.Shift.BEFORE;
+
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
     @Inject(method = "handleKeybinds", at = @At("HEAD"))
@@ -17,6 +20,7 @@ public class MinecraftMixin {
         OffHanderClient.clientTick(Minecraft.getInstance());
     }
 
+    /*
     @Redirect(method = "handleKeybinds",
             at = @At(
                     value = "INVOKE",
@@ -27,5 +31,27 @@ public class MinecraftMixin {
         if (!(OffHanderClient.MAIN_HAND.isDown() || OffHanderClient.OFF_HAND.isDown())) {
             instance.releaseUsingItem(player);
         }
+    }
+
+     */
+
+    @Inject(method = "handleKeybinds",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;releaseUsingItem(Lnet/minecraft/world/entity/player/Player;)V",
+                    shift = BEFORE
+            )
+    )
+    private void redirectKeyUp(CallbackInfo ci) {
+    }
+
+    @Inject(method = "handleKeybinds",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;releaseUsingItem(Lnet/minecraft/world/entity/player/Player;)V",
+                    shift = AFTER
+            )
+    )
+    private void redirectKeyUpAfter(CallbackInfo ci) {
     }
 }

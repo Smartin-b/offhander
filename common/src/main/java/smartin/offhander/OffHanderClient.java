@@ -29,7 +29,6 @@ public class OffHanderClient {
     public static boolean wasUseKeyLastDown = false;
 
     public static void clientTick(Minecraft client) {
-        LOGGER.info("client tick");
         LocalPlayer player = client.player;
         if (player != null) {
             if (player.isUsingItem()) {

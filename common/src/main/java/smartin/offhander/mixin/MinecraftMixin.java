@@ -1,12 +1,9 @@
 package smartin.offhander.mixin;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.MultiPlayerGameMode;
-import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import smartin.offhander.OffHanderClient;
 
@@ -14,7 +11,7 @@ import static org.spongepowered.asm.mixin.injection.At.Shift.AFTER;
 import static org.spongepowered.asm.mixin.injection.At.Shift.BEFORE;
 
 @Mixin(Minecraft.class)
-public class MinecraftMixin {
+public interface MinecraftMixin {
     @Inject(method = "handleKeybinds", at = @At("HEAD"))
     private void injectMethod(CallbackInfo ci) {
         OffHanderClient.clientTick(Minecraft.getInstance());

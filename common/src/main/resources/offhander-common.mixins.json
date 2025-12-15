@@ -7,7 +7,6 @@
         "MinecraftAccessor"
     ],
     "client": [
-        "KeyMappingMixin",
         "MinecraftMixin",
         "MultiPlayerGameMode"
     ],

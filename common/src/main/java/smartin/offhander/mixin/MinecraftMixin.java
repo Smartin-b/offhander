@@ -2,6 +2,7 @@ package smartin.offhander.mixin;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +15,7 @@ import smartin.offhander.OffHanderClient;
 public class MinecraftMixin {
     @Inject(method = "handleKeybinds", at = @At("HEAD"))
     private void injectMethod(CallbackInfo ci) {
-        OffHanderClient.clientTick(Minecraft.getInstance());
+        //OffHanderClient.clientTick(Minecraft.getInstance());
     }
 
     @Redirect(method = "handleKeybinds",
@@ -27,5 +28,19 @@ public class MinecraftMixin {
         if (!(OffHanderClient.MAIN_HAND.isDown() || OffHanderClient.OFF_HAND.isDown())) {
             instance.releaseUsingItem(player);
         }
+    }
+
+    @Redirect(
+            method = "startUseItem",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/InteractionHand;values()[Lnet/minecraft/world/InteractionHand;")
+    )
+    private InteractionHand[] redirectInteractionHandValues() {
+        // Example: return only MAIN_HAND
+        return OffHanderClient.ACTIVE_HANDS;
+
+        // Or implement conditional logic:
+        // return someCondition ? customArray : InteractionHand.values();
     }
 }

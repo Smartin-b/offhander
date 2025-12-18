@@ -9,7 +9,7 @@
     "client": [
         "KeyMappingMixin",
         "MinecraftMixin",
-        "MultiPlayerGameMode"
+        "MultiPlayerGameModeMixin"
     ],
     "injectors": {
         "defaultRequire": 1

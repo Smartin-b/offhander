@@ -1,13 +1,13 @@
 package smartin.offhander.forge;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import smartin.offhander.OffHanderClient;
 import smartin.offhander.Offhander;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD,value = Dist.CLIENT,modid = Offhander.MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT,modid = Offhander.MOD_ID)
 public class OffhanderForgeClient {
     public static void setup() {
         //NeoForge.EVENT_BUS.addListener(OffhanderForgeClient::registerBindings);

@@ -1,27 +1,15 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
-
-repositories {
-    maven { url "https://maven.fabricmc.net/" }
-    maven { url "https://maven.architectury.dev/" }
-    maven { url "https://maven.minecraftforge.net/" }
-    maven { url "https://maven.neoforged.net/#/releases" }
-}
-
 loom {
-    /*
     forge {
         mixinConfig "offhander-common.mixins.json"
         mixinConfig "offhander.mixins.json"
     }
-
-     */
 }
-
 architectury {
     platformSetupLoomIde()
-    neoForge()
+    forge()
 }
 
 configurations {
@@ -29,21 +17,20 @@ configurations {
     shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
-    developmentNeoForge.extendsFrom common
+    developmentForge.extendsFrom common
 }
 
 dependencies {
-
-    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    forge "net.minecraftforge:forge:${rootProject.forge_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }
 
 processResources {
     inputs.property "version", project.version
 
-    filesMatching("META-INF/neoforge.mods.toml") {
+    filesMatching("META-INF/mods.toml") {
         expand "version": project.version
     }
 }
@@ -87,5 +74,6 @@ publishing {
 
     // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
+        // Add repositories to publish to here.
     }
 }

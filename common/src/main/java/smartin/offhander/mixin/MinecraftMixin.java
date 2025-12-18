@@ -37,10 +37,13 @@ public class MinecraftMixin {
                     target = "Lnet/minecraft/world/InteractionHand;values()[Lnet/minecraft/world/InteractionHand;")
     )
     private InteractionHand[] redirectInteractionHandValues() {
-        // Example: return only MAIN_HAND
+        if (((KeyMappingAccessor) Minecraft.getInstance().options.keyUse).offhanderIsDown()) {
+            OffHanderClient.ACTIVE_HANDS = new InteractionHand[]{InteractionHand.MAIN_HAND, InteractionHand.OFF_HAND};
+        } else if (OffHanderClient.MAIN_HAND.isDown()) {
+            OffHanderClient.ACTIVE_HANDS = new InteractionHand[]{InteractionHand.MAIN_HAND};
+        } else if (OffHanderClient.OFF_HAND.isDown()) {
+            OffHanderClient.ACTIVE_HANDS = new InteractionHand[]{InteractionHand.OFF_HAND};
+        }
         return OffHanderClient.ACTIVE_HANDS;
-
-        // Or implement conditional logic:
-        // return someCondition ? customArray : InteractionHand.values();
     }
 }

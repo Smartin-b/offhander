@@ -12,9 +12,6 @@ import smartin.offhander.OffHanderClient;
 @Mixin(KeyMapping.class)
 public class KeyMappingMixin {
 
-    @Shadow
-    private boolean isDown;
-
     @ModifyReturnValue(method = "Lnet/minecraft/client/KeyMapping;isDown()Z", at = @At("RETURN"))
     private boolean offhander$injectIsDownConsumeClick(boolean original) {
         KeyMapping mapping = (KeyMapping) (Object) (this);
@@ -35,7 +32,7 @@ public class KeyMappingMixin {
     @ModifyReturnValue(method = "Lnet/minecraft/client/KeyMapping;consumeClick()Z", at = @At("RETURN"))
     private boolean offhander$injectConsumeRightClick(boolean original) {
         KeyMapping mapping = (KeyMapping) (Object) (this);
-        if (mapping.equals(Minecraft.getInstance().options.keyUse) && !isDown) {
+        if (mapping.equals(Minecraft.getInstance().options.keyUse) && !((KeyMappingAccessor)mapping).offhanderIsDown()) {
             if (OffHanderClient.MAIN_HAND.isDown()) {
                 return OffHanderClient.MAIN_HAND.consumeClick();
             } else if (OffHanderClient.OFF_HAND.isDown()) {

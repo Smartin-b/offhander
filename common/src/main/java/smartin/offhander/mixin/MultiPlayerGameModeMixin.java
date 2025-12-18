@@ -10,7 +10,7 @@ import smartin.offhander.OffHanderClient;
 @Mixin(MultiPlayerGameMode.class)
 public abstract class MultiPlayerGameModeMixin {
 
-    @Inject(method = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;releaseUsingItem(Lnet/minecraft/world/entity/player/Player;)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "releaseUsingItem", at = @At("HEAD"), cancellable = true)
     private void injectMethod(CallbackInfo ci) {
         if ((OffHanderClient.MAIN_HAND.isDown() || OffHanderClient.OFF_HAND.isDown())) {
             ci.cancel();

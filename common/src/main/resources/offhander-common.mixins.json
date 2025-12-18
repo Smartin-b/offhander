@@ -4,9 +4,10 @@
     "package": "smartin.offhander.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "MinecraftAccessor"
     ],
     "client": [
+        "KeyMappingAccessor",
+        "MinecraftAccessor",
         "KeyMappingMixin",
         "MinecraftMixin",
         "MultiPlayerGameModeMixin"

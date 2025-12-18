@@ -2,28 +2,25 @@ package smartin.offhander;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import smartin.offhander.mixin.MinecraftAccessor;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import static smartin.offhander.Offhander.LOGGER;
 import static smartin.offhander.Offhander.MOD_ID;
 
 public class OffHanderClient {
     public static final Map<ResourceLocation, KeyMapping> MAPPINGS = new HashMap<>();
     public static final KeyMapping MAIN_HAND = register(ResourceLocation.tryParse(MOD_ID + ":mainhand"), new KeyMapping(MOD_ID + ".mainhand", -1, MOD_ID + ".keybinds"));
     public static final KeyMapping OFF_HAND = register(ResourceLocation.tryParse(MOD_ID + ":offhand"), new KeyMapping(MOD_ID + ".offhand", InputConstants.Type.MOUSE, 4, MOD_ID + ".keybinds"));
+    public static InteractionHand[] ACTIVE_HANDS = new InteractionHand[]{};
 
+    public static KeyMapping register(ResourceLocation location, KeyMapping mapping) {
+        MAPPINGS.put(location, mapping);
+        return mapping;
+    }
+
+    /*
     public static boolean wasOffHandLastDown = false;
     public static boolean wasMainHandLastDown = false;
     public static boolean wasUseKeyLastDown = false;
@@ -65,11 +62,6 @@ public class OffHanderClient {
         }
     }
 
-    public static KeyMapping register(ResourceLocation location, KeyMapping mapping) {
-        MAPPINGS.put(location, mapping);
-        return mapping;
-    }
-
     private static void startUseItem(Minecraft minecraft, InteractionHand interactionHand) {
         LOGGER.info("use item");
         if (!minecraft.gameMode.isDestroying()) {
@@ -100,8 +92,8 @@ public class OffHanderClient {
                                 interactionResult = minecraft.gameMode.interact(minecraft.player, entity, interactionHand);
                             }
 
-                            if (interactionResult.consumesAction()) {
-                                if (interactionResult.shouldSwing()) {
+                            if (interactionResult.consumesAction() && interactionResult instanceof InteractionResult.Success successResult) {
+                                if (successResult.swingSource().equals(InteractionResult.SwingSource.SERVER)) {
                                     minecraft.player.swing(interactionHand);
                                 }
 
@@ -113,9 +105,9 @@ public class OffHanderClient {
                             int i = itemStack.getCount();
                             InteractionResult interactionResult2 = minecraft.gameMode.useItemOn(minecraft.player, interactionHand, blockHitResult);
                             if (interactionResult2.consumesAction()) {
-                                if (interactionResult2.shouldSwing()) {
+                                if (interactionResult2.consumesAction() && interactionResult2 instanceof InteractionResult.Success successResult) {
                                     minecraft.player.swing(interactionHand);
-                                    if (!itemStack.isEmpty() && (itemStack.getCount() != i || minecraft.gameMode.hasInfiniteItems())) {
+                                    if (!itemStack.isEmpty() && (itemStack.getCount() != i || minecraft.gameMode.getPlayerMode().isCreative())) {
                                         minecraft.gameRenderer.itemInHandRenderer.itemUsed(interactionHand);
                                     }
                                 }
@@ -132,7 +124,7 @@ public class OffHanderClient {
                 if (!itemStack.isEmpty()) {
                     InteractionResult interactionResult3 = minecraft.gameMode.useItem(minecraft.player, interactionHand);
                     if (interactionResult3.consumesAction()) {
-                        if (interactionResult3.shouldSwing()) {
+                        if (interactionResult3.consumesAction() && interactionResult3 instanceof InteractionResult.Success successResult) {
                             minecraft.player.swing(interactionHand);
                         }
 
@@ -144,4 +136,6 @@ public class OffHanderClient {
             }
         }
     }
+
+     */
 }

@@ -37,9 +37,13 @@ public class KeyMappingMixin {
         KeyMapping mapping = (KeyMapping) (Object) (this);
         if (mapping.equals(Minecraft.getInstance().options.keyUse) && !isDown) {
             if (OffHanderClient.MAIN_HAND.isDown()) {
+                OffHanderClient.ACTIVE_HANDS = new InteractionHand[]{InteractionHand.MAIN_HAND};
                 return OffHanderClient.MAIN_HAND.consumeClick();
             } else if (OffHanderClient.OFF_HAND.isDown()) {
+                OffHanderClient.ACTIVE_HANDS = new InteractionHand[]{InteractionHand.OFF_HAND};
                 return OffHanderClient.OFF_HAND.consumeClick();
+            }else{
+                OffHanderClient.ACTIVE_HANDS = new InteractionHand[]{InteractionHand.MAIN_HAND, InteractionHand.OFF_HAND};
             }
         }
         return original;
